@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main-form">
+    <div class="intro-section">
+        <h2>Get Smart Business Recommendations</h2>
+        <p>Upload your sales data and tell us about local events to get AI-powered advice for your shop.</p>
+        <div id="upload-status" class="upload-status" style="display: none;">
+            <div class="status-indicator">
+                <div class="spinner"></div>
+                <span id="status-text">Processing your data...</span>
+            </div>
+        </div>
+    </div>
+    
+    <form id="bharatsignal-form" action="/analyze" method="POST" enctype="multipart/form-data">
+        <div class="upload-section">
+            <h3>📊 Upload Your Sales Data</h3>
+            <div class="file-upload">
+                <input type="file" id="csv-upload" name="csv_file" accept=".csv" required>
+                <label for="csv-upload" class="file-label">
+                    <span class="file-text">Choose CSV file...</span>
+                    <span class="file-button">Browse</span>
+                </label>
+            </div>
+            <div class="file-info">
+                <p><strong>CSV Format Required:</strong> date, item, quantity, price</p>
+                <p><strong>Example:</strong> 2024-01-15, Rice 1kg, 10, 45.00</p>
+            </div>
+        </div>
+        
+        <div class="context-section">
+            <h3>🤖 Ask AI about your shop</h3>
+            <textarea 
+                name="context" 
+                id="context-input" 
+                placeholder="Ask any question about your business:&#10;&#10;• Tell me about my stock&#10;• Should I restock oil?&#10;• Which items are selling slowly?&#10;• What should I do for the festival?&#10;&#10;Or describe local events: 'Diwali coming next week, heavy rain for 3 days'"
+                rows="6"></textarea>
+        </div>
+        
+        <div class="action-section">
+            <button type="submit" class="generate-btn">
+                🤖 Generate AI Recommendations
+            </button>
+        </div>
+    </form>
+    
+    <div class="demo-section">
+        <h3>🎯 Try Demo Mode</h3>
+        <p>Want to see how it works? Try with sample data from different scenarios.</p>
+        
+        <div class="demo-scenarios">
+            <div class="scenario-selector">
+                <label for="scenario-select">Choose a demo scenario:</label>
+                <select id="scenario-select">
+                    <option value="">Loading scenarios...</option>
+                </select>
+            </div>
+            
+            <div class="demo-actions">
+                <button type="button" class="demo-btn" onclick="loadSelectedScenario()">
+                    📊 Load Demo Scenario
+                </button>
+                <button type="button" class="demo-btn secondary" onclick="downloadSampleCSV()">
+                    📥 Download Sample CSV
+                </button>
+            </div>
+        </div>
+        
+        <div class="demo-info">
+            <p><strong>Demo Mode Features:</strong></p>
+            <ul>
+                <li>Pre-loaded sales data from different business scenarios</li>
+                <li>Sample context for festivals, weather, and local events</li>
+                <li>See how AI recommendations change based on different conditions</li>
+                <li>All demo data is clearly marked and separate from your real data</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="help-section">
+        <h3>❓ How It Works</h3>
+        <div class="steps">
+            <div class="step">
+                <span class="step-number">1</span>
+                <p>Upload your sales data as a CSV file</p>
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                <p>Add local context about festivals, weather, events</p>
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <p>Get AI recommendations for stocking and pricing</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="loading-overlay" class="loading-overlay" style="display: none;">
+    <div class="loading-content">
+        <div class="spinner"></div>
+        <h3>Analyzing Your Data...</h3>
+        <p>Our AI is reviewing your sales data and local context to generate personalized recommendations.</p>
+    </div>
+</div>
+{% endblock %}

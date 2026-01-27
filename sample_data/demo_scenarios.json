@@ -1,0 +1,21 @@
+{
+  "scenarios": [
+    {
+      "name": "Festival Season (Diwali)",
+      "csv_file": "festival_season_sales.csv",
+      "context": "Diwali festival is coming in 2 weeks - expect very high demand for sweets, ghee, oil, and decorative items like diyas and candles.\n\nWeather: Pleasant post-monsoon weather, good for shopping and celebrations.\n\nLocal events: Multiple family gatherings and community celebrations planned. Neighbors are preparing for house cleaning and decoration.\n\nMarket trends: Prices of dry fruits and ghee are rising due to festival demand. Competition is offering discounts on bulk purchases.\n\nCustomer behavior: Families are buying in larger quantities than usual. Premium items like dry fruits and branded sweets are in high demand."
+    },
+    {
+      "name": "Monsoon Season",
+      "csv_file": "monsoon_season_sales.csv", 
+      "context": "Heavy monsoon rains for the past 2 weeks - people staying indoors more and buying comfort foods.\n\nWeather: Continuous rainfall, high humidity, roads sometimes waterlogged. Customers prefer quick shopping trips.\n\nLocal events: Schools closed due to heavy rains. More families at home during the day.\n\nMarket trends: Increased demand for tea, biscuits, instant foods, and health items like ginger and honey. Umbrellas and raincoats selling well.\n\nCustomer behavior: People buying more packaged and instant foods. Preference for items that don't spoil quickly due to humidity."
+    },
+    {
+      "name": "Regular Business Days",
+      "csv_file": "regular_daily_sales.csv",
+      "context": "Normal business operations during regular season - steady daily sales patterns.\n\nWeather: Pleasant spring weather, good for daily shopping routines.\n\nLocal events: Normal school and office schedules. Regular community activities.\n\nMarket trends: Stable prices for most items. Seasonal vegetables like tomatoes showing some price variation.\n\nCustomer behavior: Regular daily purchases of essentials. Customers buying fresh items more frequently. Steady demand for staples like rice, dal, and oil.\n\nCompetition: Normal competitive environment. Focus on maintaining good relationships with regular customers."
+    }
+  ]
+}
+</text>
+</invoke>

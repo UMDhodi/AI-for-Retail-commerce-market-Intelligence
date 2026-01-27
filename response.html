@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BharatSignal Decision Board</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🇮🇳 BharatSignal</h1>
+            <p class="tagline">AI-powered decisions for your kirana shop</p>
+        </div>
+    </header>
+    
+    <main class="container">
+        
+<div class="results-container">
+    
+    
+    <div class="results-header">
+        <h2>🎯 Your AI Recommendations</h2>
+        <p>Based on analysis of 4 sales records and your local context</p>
+        <a href="/" class="back-btn">← Analyze New Data</a>
+    </div>
+    
+    <!-- QUESTION CONTEXT HEADER (NEW) -->
+    <div id="question-context-header" class="question-context-header">
+        <div class="context-label">Answer to:</div>
+        <div id="current-question" class="current-question">"Tell me about my stock"</div>
+    </div>
+    
+    <!-- MAIN AI RECOMMENDATIONS SECTION -->
+    <div id="recommendations-section" class="recommendations-section">
+        
+        <!-- CARD 1 — PRIMARY DECISION (MOST IMPORTANT) -->
+        <div class="recommendation-card primary-decision-card">
+            <div class="card-header">
+                <h3>🎯 Primary Decision</h3>
+            </div>
+            
+            <div class="decision-line">
+                <strong>Decision:</strong> <span id="primary-decision" class="decision-text-bold">
+                    
+                        Focus on Stock Overview
+                    
+                </span>
+            </div>
+            
+            <div class="sales-summary-line">
+                <strong>Recent Sales Summary:</strong>
+                <ul id="sales-summary-points" class="summary-points">
+                    <li>4 transactions analyzed from recent data</li>
+                    <li>Top items identified from your sales pattern</li>
+                </ul>
+            </div>
+            
+            <div class="action-line">
+                <strong>Action:</strong> <span id="primary-action">
+                    
+                        Review your inventory based on recent performance.
+                    
+                </span>
+            </div>
+            
+            <div class="why-line">
+                <strong>Why:</strong> <span id="primary-why">
+                    
+                        Stock analysis for 2 different items
+Total revenue: ₹3325.00 over 2 days
+Latest sales date: 2024-01-16 (2 transactions)
+Top performers: Chocolate Bar (₹2025), Potato Chips (₹1300)
+Slow movers: Chocolate Bar, Potato Chips.
+                    
+                </span>
+            </div>
+            
+            <div class="confidence-line">
+                <strong>Confidence:</strong> <span id="primary-confidence" class="confidence-medium">
+                    
+                        High (based on 2 days of data)
+                    
+                </span>
+            </div>
+            
+            <div class="based-on-line">
+                <strong>Based on:</strong> <span id="primary-based-on">Recent sales data and local context</span>
+            </div>
+        </div>
+        
+        <!-- CARD 2 — SUPPORTING SIGNALS / EVIDENCE -->
+        <div class="recommendation-card supporting-signals-card">
+            <div class="card-header">
+                <h3>📊 Supporting Signals</h3>
+            </div>
+            
+            <ul id="supporting-signals-list" class="signals-list">
+                <li>Sales data from 4 recent transactions</li>
+                <li>Local context and seasonal factors considered</li>
+                <li>Business patterns identified from your data</li>
+            </ul>
+        </div>
+        
+        <!-- CARD 3 — RISK & SAFETY CHECK -->
+        <div class="recommendation-card risk-safety-card">
+            <div class="card-header">
+                <h3>⚠️ Risk & Safety Check</h3>
+            </div>
+            
+            <ul id="risk-safety-list" class="safety-list">
+                <li>Start with small increases (10-15% maximum)</li>
+                <li>Monitor sales closely for the first week</li>
+                <li>Keep supplier flexibility for adjustments</li>
+                <li>If sales drop, reduce stock by 5% immediately</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- SUGGESTED QUESTIONS BLOCK (NEW — REQUIRED) -->
+    <div class="suggested-questions-block">
+        <h4>💡 Suggested Questions (Tap to Explore More)</h4>
+        <div id="suggested-questions-chips" class="questions-chips">
+            <button class="question-chip" onclick="selectQuestion('Should I stock more oil for Diwali?')">
+                Should I stock more oil for Diwali?
+            </button>
+            <button class="question-chip" onclick="selectQuestion('Which items sold slowly this week?')">
+                Which items sold slowly this week?
+            </button>
+            <button class="question-chip" onclick="selectQuestion('What should I reduce to save cash?')">
+                What should I reduce to save cash?
+            </button>
+            <button class="question-chip" onclick="selectQuestion('What will sell more if it rains tomorrow?')">
+                What will sell more if it rains tomorrow?
+            </button>
+            <button class="question-chip" onclick="selectQuestion('Should I refill tea and biscuits today?')">
+                Should I refill tea and biscuits today?
+            </button>
+        </div>
+    </div>
+    
+    <!-- ASK AI INPUT (REFINED) -->
+    <div class="ask-ai-section">
+        <label for="ai-question-input" class="ai-input-label">Ask AI about your shop</label>
+        <div class="ask-ai-input-group">
+            <textarea 
+                id="ai-question-input" 
+                placeholder="Should I restock rice today?"
+                rows="2"></textarea>
+            <button id="ask-ai-btn" class="ask-ai-btn" onclick="askAIQuestion()">
+                Ask AI
+            </button>
+        </div>
+        
+        <!-- LOADING STATE -->
+        <div id="loading-state" class="loading-state" style="display: none;">
+            <div class="loading-spinner"></div>
+            <span>Analyzing recent sales and local context...</span>
+        </div>
+    </div>
+    
+    <div class="actions-section">
+        <button type="button" class="action-btn" onclick="window.print()">
+            🖨️ Print Recommendations
+        </button>
+        
+    </div>
+    
+    <div class="disclaimer">
+        <p><small><strong>Disclaimer:</strong> Suggestions are advisory and based on available data. Consider your local market conditions and business constraints.</small></p>
+    </div>
+</div>
+
+<script>
+// Store sales data and context for Q&A
+window.salesData = [{"date": "2024-01-15", "item": "Chocolate Bar", "quantity": 25, "price": 45.0}, {"date": "2024-01-15", "item": "Potato Chips", "quantity": 30, "price": 20.0}, {"date": "2024-01-16", "item": "Chocolate Bar", "quantity": 20, "price": 45.0}, {"date": "2024-01-16", "item": "Potato Chips", "quantity": 35, "price": 20.0}];
+window.contextData = "";
+
+// Rotating placeholder examples
+const placeholderExamples = [
+    "Should I restock rice today?",
+    "What will sell more this weekend?", 
+    "Which item should I reduce now?",
+    "Should I stock more for the festival?",
+    "What about monsoon season items?"
+];
+
+let placeholderIndex = 0;
+
+function rotatePlaceholder() {
+    const input = document.getElementById('ai-question-input');
+    if (input) {
+        input.placeholder = placeholderExamples[placeholderIndex];
+        placeholderIndex = (placeholderIndex + 1) % placeholderExamples.length;
+    }
+}
+
+// Rotate placeholder every 3 seconds
+setInterval(rotatePlaceholder, 3000);
+
+function tryAnotherScenario() {
+    window.location.href = '/';
+}
+</script>
+
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 BharatSignal - Empowering Indian retail with AI</p>
+        </div>
+    </footer>
+    
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
