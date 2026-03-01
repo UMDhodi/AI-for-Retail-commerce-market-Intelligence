@@ -101,15 +101,27 @@ date,item,quantity,price
 - `quantity`: Number of units sold (integer)
 - `price`: Price per unit in INR (decimal)
 
-### 2. Add Local Context
+**Add Local Context**
 
-Provide information about:
+Provide information about "context" in prompt:
 - Upcoming festivals (Diwali, Holi, etc.)
 - Weather conditions (monsoon, heat wave)
 - Local events (weddings, celebrations)
 - Market changes or competition
 
-### 3. Get AI Recommendations
+### 2. Or Upload CSV file:
+
+Downlaod and use our custom sample CSV file "AI for Bharat - Sheet 1" 
+
+### 3. Ask question like:
+
+- Tell me about my stock?
+- Should I stock more oil for diwali?
+- What about ghee for festival season?
+- Should I focuse more on rice 1kg since it's selling best?
+- Should I reduce tea 250g stock since it's selling slowly?
+
+### 4. Get AI Recommendations
 
 The system will analyze your data and provide:
 - **Stocking recommendations**: Which items to stock more/less
@@ -118,7 +130,7 @@ The system will analyze your data and provide:
 
 ## Demo Mode
 
-Try the system without your own data:
+Try the system without your custom smaple CSV file data:
 
 1. Click "Load Sample Data" on the main page
 2. Download the sample CSV file
