@@ -65,9 +65,9 @@ python run.py
 ## 📝 Environment Variables
 
 ```bash
-# AWS Credentials
-AWS_ACCESS_KEY_ID=your_key
-AWS_SECRET_ACCESS_KEY=your_secret
+# AWS Credentials (configured in .env file)
+AWS_ACCESS_KEY_ID=your_access_key_here
+AWS_SECRET_ACCESS_KEY=your_secret_key_here
 AWS_REGION=us-east-1
 
 # S3

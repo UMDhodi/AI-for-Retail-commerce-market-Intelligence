@@ -219,7 +219,7 @@ class S3Handler:
                     lifecycle_policy = {
                         'Rules': [
                             {
-                                'Id': 'DeleteOldCSVs',
+                                'ID': 'DeleteOldCSVs',
                                 'Status': 'Enabled',
                                 'Prefix': '',
                                 'Expiration': {'Days': 30}

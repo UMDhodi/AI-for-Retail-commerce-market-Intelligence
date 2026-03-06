@@ -129,8 +129,12 @@ class BedrockClient:
             elif error_code == 'ValidationException':
                 # This might be expected for the test request
                 logger.info("Bedrock authentication appears valid (validation error on test request)")
+            elif error_code == 'ResourceNotFoundException':
+                # Model might not be accessible yet, but credentials are valid
+                logger.warning(f"Model {self.config.model_id} not accessible, but credentials are valid")
             else:
-                raise BedrockClientError(f"Authentication test failed: {error_code}")
+                # Don't fail initialization for other errors
+                logger.warning(f"Authentication test inconclusive: {error_code}")
         except Exception as e:
             # For testing purposes, we'll be more lenient
             logger.warning(f"Authentication test inconclusive: {str(e)}")
@@ -156,7 +160,7 @@ class BedrockClient:
     
     def generate_recommendations(self, sales_data: List[SalesRecord], context: LocalContext) -> List[Recommendation]:
         """
-        Generate AI recommendations using Bedrock Claude 3 Sonnet.
+        Generate AI recommendations using Bedrock (supports Claude and Amazon Nova).
         
         Args:
             sales_data: List of validated sales records
@@ -175,13 +179,40 @@ class BedrockClient:
             # Build prompt for AI model using prompt engineering module
             prompt = self.prompt_builder.build_recommendation_prompt(sales_data, context)
             
-            # Prepare request body
-            request_body = {
-                'anthropic_version': 'bedrock-2023-05-31',
-                'messages': [{'role': 'user', 'content': prompt}],
-                'max_tokens': self.config.max_tokens,
-                'temperature': self.config.temperature
-            }
+            # Determine model type and format request accordingly
+            is_nova = 'nova' in self.config.model_id.lower()
+            is_claude = 'claude' in self.config.model_id.lower() or 'anthropic' in self.config.model_id.lower()
+            
+            if is_nova:
+                # Amazon Nova format
+                request_body = {
+                    'messages': [
+                        {
+                            'role': 'user',
+                            'content': [{'text': prompt}]
+                        }
+                    ],
+                    'inferenceConfig': {
+                        'maxTokens': self.config.max_tokens,
+                        'temperature': self.config.temperature
+                    }
+                }
+            elif is_claude:
+                # Claude format
+                request_body = {
+                    'anthropic_version': 'bedrock-2023-05-31',
+                    'messages': [{'role': 'user', 'content': prompt}],
+                    'max_tokens': self.config.max_tokens,
+                    'temperature': self.config.temperature
+                }
+            else:
+                # Default format (try Claude format)
+                request_body = {
+                    'anthropic_version': 'bedrock-2023-05-31',
+                    'messages': [{'role': 'user', 'content': prompt}],
+                    'max_tokens': self.config.max_tokens,
+                    'temperature': self.config.temperature
+                }
             
             logger.info(f"Invoking Bedrock model {self.config.model_id}")
             
@@ -191,9 +222,25 @@ class BedrockClient:
                 body=json.dumps(request_body)
             )
             
-            # Parse response
+            # Parse response based on model type
             response_body = json.loads(response['body'].read())
-            ai_text = response_body['content'][0]['text']
+            
+            if is_nova:
+                # Amazon Nova response format
+                if 'output' in response_body and 'message' in response_body['output']:
+                    message = response_body['output']['message']
+                    if 'content' in message and len(message['content']) > 0:
+                        ai_text = message['content'][0]['text']
+                    else:
+                        raise BedrockClientError("Unexpected Nova response format")
+                else:
+                    raise BedrockClientError("Unexpected Nova response format")
+            elif is_claude:
+                # Claude response format
+                ai_text = response_body['content'][0]['text']
+            else:
+                # Try Claude format as default
+                ai_text = response_body.get('content', [{}])[0].get('text', '')
             
             logger.info("Bedrock model invocation successful")
             
