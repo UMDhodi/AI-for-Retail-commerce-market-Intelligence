@@ -2,14 +2,14 @@
 
 > Empowering small retail shops in India with AI-driven decision support
 
-[![Demo Video](https://img.shields.io/badge/▶️_Watch_Demo-YouTube-red?style=for-the-badge)](https://youtube.com/your-demo-video)
-[![Live Demo](https://img.shields.io/badge/🚀_Try_Live_Demo-Click_Here-blue?style=for-the-badge)](http://localhost:5000)
+[![Demo Video](https://img.shields.io/badge/▶️_Watch_Demo-YouTube-red?style=for-the-badge)](https://drive.google.com/file/d/1Ss6UzwRiRXGKljCWlon38Pc4MvUXgQXp/view?usp=sharing)
+[![Live Demo](https://img.shields.io/badge/🚀_Try_Live_Demo-Click_Here-blue?style=for-the-badge)](http://bharatsignal-temp-env.eba-ze63igsz.us-east-1.elasticbeanstalk.com/)
 
 ---
 
 ## 📹 Demo Video
 
-[**▶️ Watch the Full Demo**](https://youtube.com/your-demo-video)
+[**▶️ Watch the Full Demo**](https://drive.google.com/file/d/1Ss6UzwRiRXGKljCWlon38Pc4MvUXgQXp/view?usp=sharing)
 
 *See BharatSignal in action - from CSV upload to AI-powered recommendations in under 2 minutes!*
 
@@ -47,15 +47,18 @@ BharatSignal is an AI-powered decision-support system that:
 
 ### 1️⃣ Upload Your Sales Data
 ```
-Upload CSV file with: date, item, quantity, price
+Upload "AI for Bharat test - Sheet1.csv" CSV file with: date, item, quantity, price
 Example: 2024-01-15, Rice 1kg, 45, 45.00
 ```
 
-### 2️⃣ Add Local Context (Optional)
+### 2️⃣ You can use question
 ```
-"Diwali festival coming in 2 weeks"
-"Heavy monsoon expected next month"
-"Local wedding season starting"
+"Tell me about my stock"
+"What about flour for festival season"
+"What's my best-selling item this week"
+"Should I stock more oil for diwali"
+"Should I increase rice stock for cooking"
+"Should I change price for any item"
 ```
 
 ### 3️⃣ Get AI Recommendations
